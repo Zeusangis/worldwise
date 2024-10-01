@@ -22,27 +22,22 @@ function CitiesProvider({ children }) {
       }
     }
     fetchCities();
-  });
+  }, []);
 
   async function getCity(id) {
-    useEffect(() => {
-      async function fetchCities() {
-        try {
-          setIsLoading(true);
-          const res = await fetch(`${BASE_URL}/cities/${id}`);
-          const data = await res.json();
-          setCurrentCit(data);
-        } catch {
-          alert("There was an error loading data.");
-        } finally {
-          setIsLoading(false);
-        }
-      }
-      fetchCities();
-    });
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities/${id}`);
+      const data = await res.json();
+      setCurrentCity(data);
+    } catch {
+      alert("There was an error loading data.");
+    } finally {
+      setIsLoading(false);
+    }
   }
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, currentCity,getCity }}>
+    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity }}>
       {children}
     </CitiesContext.Provider>
   );
