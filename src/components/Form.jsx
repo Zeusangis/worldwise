@@ -1,4 +1,3 @@
-
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
 import { useEffect, useState } from "react";
@@ -48,15 +47,16 @@ function Form() {
           setGeocodingError("");
 
           const res = await fetch(
-            `${BASE_URL}?latitude=${lat}&longitude=${lng}`
+            `${BASE_URL}?latitude=${lat}&longitude=${lng}`,
           );
           const data = await res.json();
           console.log(data);
 
-          if (!data.countryCode)
+          if (!data.countryCode) {
             throw new Error(
-              "That doesn't seem to be a city. Click somewhere else 😉"
+              "That doesn't seem to be a city. Click somewhere else 😉",
             );
+          }
 
           setCityName(data.city || data.locality || "");
           setCountry(data.countryName);
@@ -69,7 +69,7 @@ function Form() {
       }
       fetchCityData();
     },
-    [lat, lng]
+    [lat, lng],
   );
 
   async function handleSubmit(e) {
@@ -92,8 +92,9 @@ function Form() {
 
   if (isLoadingGeocoding) return <Spinner />;
 
-  if (!lat && !lng)
+  if (!lat && !lng) {
     return <Message message="Start by clicking somewhere on the map" />;
+  }
 
   if (geocodingError) return <Message message={geocodingError} />;
 
@@ -141,4 +142,3 @@ function Form() {
 }
 
 export default Form;
-
